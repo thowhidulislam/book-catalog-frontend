@@ -1,5 +1,11 @@
+import RecentlyAddedBooks from "@/components/RecentlyAddedBooks";
+
 const Home = () => {
-  return <div></div>;
+  return (
+    <>
+      <RecentlyAddedBooks />
+    </>
+  );
 };
 
 export default Home;

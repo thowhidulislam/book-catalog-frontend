@@ -16,13 +16,15 @@ const Navbar = () => {
       <div className="h-full w-full bg-white/60">
         <div className="mx-auto flex h-full w-full items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">BOOKSHELF</h1>
+            <Link to="/">
+              <h1 className="text-2xl font-bold">BOOKSHELF</h1>
+            </Link>
           </div>
           <div>
             <ul className="flex items-center">
               <li className="mr-5">
                 <Button variant="link" asChild>
-                  <Link to="/login">All Books</Link>
+                  <Link to="/allBooks">All Books</Link>
                 </Button>
               </li>
               <li>
