@@ -37,7 +37,7 @@ const Navbar = () => {
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
-                      <Link to="/login">Sign In</Link>
+                      <Link to="/login">Login</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Link to="/sign">Sign Up</Link>
