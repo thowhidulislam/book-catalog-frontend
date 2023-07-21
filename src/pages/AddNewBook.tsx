@@ -25,7 +25,7 @@ const AddNewBook = () => {
   console.log("books data", booksData);
   const [addBook, { isLoading }] = useAddBookMutation();
 
-  const hadleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addBook(booksData);
     setBooksData({
@@ -57,7 +57,7 @@ const AddNewBook = () => {
                 Enter your book information to add the book in the website
               </p>
             </div>
-            <form className="w-2/4" onSubmit={hadleSubmit}>
+            <form className="w-2/4" onSubmit={handleSubmit}>
               <Input
                 className="mb-3"
                 placeholder="Book title"
