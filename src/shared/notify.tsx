@@ -1,4 +1,4 @@
-import { Theme, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 type ToastType = "success" | "error" | "warn" | "info";
@@ -14,7 +14,7 @@ const notify = (message: string, type: ToastType) => {
     pauseOnFocusLoss: true,
     draggable: false,
     pauseOnHover: true,
-    theme: "light" as Theme,
+    // theme: "light" as Theme,
   };
 
   switch (type) {

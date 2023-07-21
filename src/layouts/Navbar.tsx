@@ -8,9 +8,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { setUser } from "@/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { user, isLoading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    dispatch(setUser(user ? JSON.parse(user).email : null));
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    dispatch(setUser(null));
+  };
+
   return (
     <nav className="container top fixed z-10 h-16 w-full backdrop-blur-lg">
       <div className="h-full w-full bg-white/60">
@@ -43,12 +59,24 @@ const Navbar = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link to="/login">Login</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link to="/signup">Sign Up</Link>
-                    </DropdownMenuItem>
+                    {!user.email && (
+                      <>
+                        <DropdownMenuItem>
+                          <Link to="/login">Login</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link to="/signup">Sign Up</Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
+                    {user.email && (
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="cursor-pointer"
+                      >
+                        Log out
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </li>

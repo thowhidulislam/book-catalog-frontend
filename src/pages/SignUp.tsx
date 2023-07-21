@@ -13,25 +13,20 @@ const SignUp = () => {
     password: "",
   });
 
-  const [createUser] = useCreateUserMutation();
+  const [createUser, { error }] = useCreateUserMutation();
 
   const handleCreateAccountSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
-    try {
-      e.preventDefault();
-      await createUser(userData);
-      notify("Account is created successfully", "success");
-      setUserData({ name: "", email: "", password: "" });
-    } catch (error) {
-      notify("Account Creation Failed", "error");
-    }
+    e.preventDefault();
+    await createUser(userData);
+    !error && notify("Account is created successfully", "success");
+    setUserData({ name: "", email: "", password: "" });
+    error && notify("Account Creation Failed", "error");
   };
 
   return (
     <section>
-      {/* Same as */}
-
       <div className="flex min-h-screen relative">
         <Button variant="outline" asChild className="absolute right-5 top-5">
           <Link to="/login">Login</Link>
