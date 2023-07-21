@@ -1,6 +1,7 @@
 import BookCard from "@/components/BookCard";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useGetBooksQuery } from "@/redux/features/Books/booksApi";
 import { IBook } from "@/types/globalTypes";
@@ -9,17 +10,32 @@ import { RiFilter3Fill } from "react-icons/ri";
 
 const AllBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  // const [year, setYear] = useState("");
+  // const [isChecked, setIsChecked] = useState(false);
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+
   const { data, isLoading, isError } = useGetBooksQuery(
     {
       searchTerm,
-      // genre: "Fiction",
-      // title: "To Kill a Mockingbird",
+      publicationDate: selectedYears.join(","),
     },
     {
       refetchOnMountOrArgChange: true,
       pollingInterval: 40000,
     }
   );
+
+  const handlePublicationYear = (publicationYear: string) => {
+    // setYear(publicationYear);
+    // setIsChecked(!isChecked);
+    setSelectedYears((prevYears) => {
+      if (prevYears.includes(publicationYear)) {
+        return prevYears.filter((year) => year !== publicationYear);
+      } else {
+        return [...prevYears, publicationYear];
+      }
+    });
+  };
 
   const genreNames = [
     "Fiction",
@@ -33,6 +49,17 @@ const AllBooks = () => {
     "Mystery",
   ];
 
+  const publicationYears = [
+    "1851-1900",
+    "1901-1920",
+    "1921-1940",
+    "1941-1960",
+    "1961-1980",
+    "1981-2000",
+    "2001-2020",
+    "2021-2040",
+  ];
+
   return (
     <section className="container mx-auto my-10">
       <div className="flex justify-end items-center">
@@ -44,13 +71,13 @@ const AllBooks = () => {
 
         <Sheet>
           <SheetTrigger>
-            {" "}
             <div className="border p-1 ml-3 rounded-lg">
               <RiFilter3Fill className="text-3xl cursor-pointer" />
             </div>
           </SheetTrigger>
           <SheetContent>
-            <p className="text-xl font-bold my-3">Genre</p>
+            <p className="text-xl font-bold mt-5 mb-1">Genre</p>
+            <Separator />
             {genreNames.map((genreName) => (
               <div className="flex items-center gap-2 my-2" key={genreName}>
                 <Checkbox id="genre" />
@@ -62,17 +89,26 @@ const AllBooks = () => {
                 </label>
               </div>
             ))}
-            <p className="text-xl font-bold my-3">Publication Year</p>
-            <div className="flex items-center gap-2">
-              <Checkbox id="genre" />
-              <label
-                htmlFor="genre"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            <p className="text-xl font-bold mt-5 mb-1">Publication Year</p>
+            <Separator />
+            {publicationYears.map((publicationYear) => (
+              <div
+                className="flex items-center gap-2 my-2"
+                key={publicationYear}
+                onClick={() => handlePublicationYear(publicationYear)}
               >
-                Publication
-              </label>
-            </div>
-            <Checkbox />
+                <Checkbox
+                  id="publishedDate"
+                  checked={selectedYears.includes(publicationYear)}
+                />
+                <label
+                  htmlFor="publishedDate"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {publicationYear}
+                </label>
+              </div>
+            ))}
           </SheetContent>
         </Sheet>
       </div>
