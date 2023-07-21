@@ -15,10 +15,16 @@ const AllBooks = () => {
     return storedYears ? storedYears.split(",") : [];
   });
 
+  const [selectedGenres, setSelectedGenres] = useState<string[]>(() => {
+    const storedGenres = localStorage.getItem("selectedGenres");
+    return storedGenres ? storedGenres.split(",") : [];
+  });
+
   const { data, isLoading, isError } = useGetBooksQuery(
     {
       searchTerm,
       publicationDate: selectedYears.join(","),
+      genre: selectedGenres.join(","),
     },
     {
       refetchOnMountOrArgChange: true,
@@ -28,7 +34,8 @@ const AllBooks = () => {
 
   useEffect(() => {
     localStorage.setItem("selectedYears", selectedYears.join(","));
-  }, [selectedYears]);
+    localStorage.setItem("selectedGenres", selectedGenres.join(","));
+  }, [selectedYears, selectedGenres]);
 
   const handlePublicationYear = (publicationYear: string) => {
     setSelectedYears((prevYears) => {
@@ -39,6 +46,18 @@ const AllBooks = () => {
       }
     });
   };
+
+  const handleGenre = (genre: string) => {
+    setSelectedGenres((prevGenres) => {
+      if (prevGenres.includes(genre)) {
+        return prevGenres.filter((nGenre) => nGenre !== genre);
+      } else {
+        return [...prevGenres, genre];
+      }
+    });
+  };
+
+  console.log("selected genre", selectedGenres.join(","));
 
   const genreNames = [
     "Fiction",
@@ -82,8 +101,15 @@ const AllBooks = () => {
             <p className="text-xl font-bold mt-5 mb-1">Genre</p>
             <Separator />
             {genreNames.map((genreName) => (
-              <div className="flex items-center gap-2 my-2" key={genreName}>
-                <Checkbox id="genre" />
+              <div
+                className="flex items-center gap-2 my-2"
+                key={genreName}
+                onClick={() => handleGenre(genreName)}
+              >
+                <Checkbox
+                  id={genreName}
+                  checked={selectedGenres.includes(genreName)}
+                />
                 <label
                   htmlFor={genreName}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -98,12 +124,12 @@ const AllBooks = () => {
               <div
                 className="flex items-center gap-2 my-2"
                 key={publicationYear}
+                onClick={() => handlePublicationYear(publicationYear)}
               >
                 <Checkbox
                   id={publicationYear}
                   checked={selectedYears.includes(publicationYear)}
                   value={publicationYear}
-                  onClick={() => handlePublicationYear(publicationYear)}
                 />
                 <label
                   htmlFor={publicationYear}
