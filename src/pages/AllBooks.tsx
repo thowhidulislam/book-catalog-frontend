@@ -98,14 +98,15 @@ const AllBooks = () => {
               <div
                 className="flex items-center gap-2 my-2"
                 key={publicationYear}
-                onClick={() => handlePublicationYear(publicationYear)}
               >
                 <Checkbox
-                  id="publishedDate"
+                  id={publicationYear}
                   checked={selectedYears.includes(publicationYear)}
+                  value={publicationYear}
+                  onClick={() => handlePublicationYear(publicationYear)}
                 />
                 <label
-                  htmlFor="publishedDate"
+                  htmlFor={publicationYear}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {publicationYear}
