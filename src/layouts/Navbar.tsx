@@ -19,12 +19,16 @@ const Navbar = () => {
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    dispatch(setUser(user ? JSON.parse(user).email : null));
+    dispatch(setUser(user ? JSON.parse(user) : null));
   }, [dispatch]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    dispatch(setUser(null));
+    dispatch(
+      setUser({
+        email: null,
+      })
+    );
   };
 
   return (
@@ -59,7 +63,7 @@ const Navbar = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {!user.email && (
+                    {!user?.email && (
                       <>
                         <DropdownMenuItem>
                           <Link to="/login">Login</Link>
@@ -69,7 +73,7 @@ const Navbar = () => {
                         </DropdownMenuItem>
                       </>
                     )}
-                    {user.email && (
+                    {user?.email && (
                       <DropdownMenuItem
                         onClick={handleLogout}
                         className="cursor-pointer"
