@@ -5,14 +5,15 @@ import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useGetBooksQuery } from "@/redux/features/Books/booksApi";
 import { IBook } from "@/types/globalTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiFilter3Fill } from "react-icons/ri";
 
 const AllBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  // const [year, setYear] = useState("");
-  // const [isChecked, setIsChecked] = useState(false);
-  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+  const [selectedYears, setSelectedYears] = useState<string[]>(() => {
+    const storedYears = localStorage.getItem("selectedYears");
+    return storedYears ? storedYears.split(",") : [];
+  });
 
   const { data, isLoading, isError } = useGetBooksQuery(
     {
@@ -25,9 +26,11 @@ const AllBooks = () => {
     }
   );
 
+  useEffect(() => {
+    localStorage.setItem("selectedYears", selectedYears.join(","));
+  }, [selectedYears]);
+
   const handlePublicationYear = (publicationYear: string) => {
-    // setYear(publicationYear);
-    // setIsChecked(!isChecked);
     setSelectedYears((prevYears) => {
       if (prevYears.includes(publicationYear)) {
         return prevYears.filter((year) => year !== publicationYear);
