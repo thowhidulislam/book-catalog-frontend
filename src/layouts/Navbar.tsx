@@ -22,9 +22,14 @@ const Navbar = () => {
           </div>
           <div>
             <ul className="flex items-center">
-              <li className="mr-5">
+              <li className="mr-2">
                 <Button variant="link" asChild>
                   <Link to="/allBooks">All Books</Link>
+                </Button>
+              </li>
+              <li className="mr-2">
+                <Button variant="link" asChild>
+                  <Link to="/add-new-book">Add New Book</Link>
                 </Button>
               </li>
               <li>
@@ -42,7 +47,7 @@ const Navbar = () => {
                       <Link to="/login">Login</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Link to="/sign">Sign Up</Link>
+                      <Link to="/signup">Sign Up</Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

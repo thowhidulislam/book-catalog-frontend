@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useGetBooksQuery } from "@/redux/features/Books/booksApi";
+import { genreNames, publicationYears } from "@/shared/common";
 import { IBook } from "@/types/globalTypes";
 import { useEffect, useState } from "react";
 import { RiFilter3Fill } from "react-icons/ri";
@@ -59,29 +60,6 @@ const AllBooks = () => {
 
   console.log("selected genre", selectedGenres.join(","));
 
-  const genreNames = [
-    "Fiction",
-    "Fantasy",
-    "Romantic",
-    "Thriller",
-    "Adventure",
-    "Crime",
-    "Historical",
-    "war",
-    "Mystery",
-  ];
-
-  const publicationYears = [
-    "1851-1900",
-    "1901-1920",
-    "1921-1940",
-    "1941-1960",
-    "1961-1980",
-    "1981-2000",
-    "2001-2020",
-    "2021-2040",
-  ];
-
   return (
     <section className="container mx-auto my-10">
       <div className="flex justify-end items-center">
@@ -101,18 +79,15 @@ const AllBooks = () => {
             <p className="text-xl font-bold mt-5 mb-1">Genre</p>
             <Separator />
             {genreNames.map((genreName) => (
-              <div
-                className="flex items-center gap-2 my-2"
-                key={genreName}
-                onClick={() => handleGenre(genreName)}
-              >
+              <div className="flex items-center gap-2 my-2" key={genreName}>
                 <Checkbox
                   id={genreName}
                   checked={selectedGenres.includes(genreName)}
+                  onClick={() => handleGenre(genreName)}
                 />
                 <label
                   htmlFor={genreName}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
                   {genreName}
                 </label>
@@ -124,16 +99,16 @@ const AllBooks = () => {
               <div
                 className="flex items-center gap-2 my-2"
                 key={publicationYear}
-                onClick={() => handlePublicationYear(publicationYear)}
               >
                 <Checkbox
                   id={publicationYear}
                   checked={selectedYears.includes(publicationYear)}
                   value={publicationYear}
+                  onClick={() => handlePublicationYear(publicationYear)}
                 />
                 <label
                   htmlFor={publicationYear}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
                   {publicationYear}
                 </label>
