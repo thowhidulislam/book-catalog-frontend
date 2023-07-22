@@ -1,8 +1,12 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLoginUserMutation } from "@/redux/features/user/userApi";
 import { setUser } from "@/redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import notify from "@/shared/notify";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginImage from "../assets/login.svg";
@@ -12,32 +16,36 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [loginData, { data }] = useLoginUserMutation();
+  const [loginData, { data, error }] = useLoginUserMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user, isLoading } = useAppSelector((state) => state.user);
 
-  useEffect(() => {
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        email: user?.email,
-        accessToken: data?.data?.accessToken,
-      })
-    );
-  }, [user, user?.email, data?.data?.accessToken, dispatch]);
-
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await loginData(userData);
-    dispatch(setUser({ email: userData.email }));
+
+    try {
+      await loginData(userData).unwrap();
+      dispatch(setUser({ email: userData.email }));
+      navigate("/");
+      notify("Loggedin Successfully", "success");
+    } catch (error: SerializedError | FetchBaseQueryError | any) {
+      notify(error?.data?.message, "error");
+    }
   };
 
   useEffect(() => {
-    if (user.email && !isLoading) {
-      navigate("/");
+    if (data) {
+      localStorage.setItem("token", JSON.stringify(data?.data?.accessToken));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: user?.email,
+          accessToken: data?.data?.accessToken,
+        })
+      );
     }
-  }, [user, isLoading, navigate]);
+  }, [data, user.email]);
 
   return (
     <section>

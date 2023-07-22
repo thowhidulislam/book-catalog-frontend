@@ -14,6 +14,12 @@ const booksApi = api.injectEndpoints({
         url: "/book/addBook",
         method: "POST",
         body: { ...data },
+        // headers: {
+        //   authorization: `Bearer ${localStorage.getItem("token")}`,
+
+        //   "Content-Type": "application/json",
+        // },
+        // user: `${localStorage.getItem("token")}`,
       }),
     }),
   }),

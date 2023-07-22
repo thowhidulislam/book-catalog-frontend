@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useAddBookMutation } from "@/redux/features/Books/booksApi";
 import { genreNames } from "@/shared/common";
 import { IBook } from "@/types/globalTypes";
@@ -22,12 +15,18 @@ const AddNewBook = () => {
     image: "",
   });
 
-  console.log("books data", booksData);
   const [addBook, { isLoading }] = useAddBookMutation();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addBook(booksData);
+    // addBook({
+    //   title: "the alchemist233",
+    //   author: "paulo coelho",
+    //   genre: "fiction",
+    //   publicationDate: "1988",
+    //   image: "https://images-na.ssl-images-amazon.com/images/I/81nzxODnaJL.jpg",
+    // });
     setBooksData({
       title: "",
       author: "",
@@ -36,6 +35,15 @@ const AddNewBook = () => {
       image: "",
     });
   };
+
+  console.log("books data", booksData);
+  const handleGenreChange = (selectedGenre: string) => {
+    setBooksData({
+      ...booksData,
+      genre: selectedGenre,
+    });
+  };
+  console.log("books data", booksData);
 
   return (
     <section>
@@ -80,27 +88,24 @@ const AddNewBook = () => {
                   })
                 }
               />
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select Genre" />
-                </SelectTrigger>
-                <SelectContent>
-                  {genreNames.map((genreName) => (
-                    <SelectItem
-                      value={genreName}
-                      key={genreName}
-                      onClick={() =>
-                        setBooksData({
-                          ...booksData,
-                          genre: genreName,
-                        })
-                      }
-                    >
-                      {genreName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+
+              <select
+                className="flex h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px] text-[#8894A6]"
+                onChange={(e) =>
+                  setBooksData({ ...booksData, genre: e.target.value })
+                }
+              >
+                {genreNames.map((genreName) => (
+                  <option
+                    value={genreName}
+                    key={genreName}
+                    className="text-[#8894A6]"
+                  >
+                    {genreName}
+                  </option>
+                ))}
+              </select>
+
               <Input
                 className="my-3"
                 placeholder="Publication year"
