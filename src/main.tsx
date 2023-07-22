@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import { store } from "./redux/store";
-import routes from "./routes";
+import routes from "./routes/routes";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
