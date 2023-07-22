@@ -2,14 +2,45 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { useGetSingleBookQuery } from "@/redux/features/Books/booksApi";
+import {
+  useDeleteBookMutation,
+  useGetSingleBookQuery,
+} from "@/redux/features/Books/booksApi";
+import notify from "@/shared/notify";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidAddToQueue } from "react-icons/bi";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const BookDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useGetSingleBookQuery(id);
+  const [deleteBook] = useDeleteBookMutation();
+  const navigate = useNavigate();
+
+  const handleBookDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteBook(id).unwrap();
+          notify("Book is deleted successfully", "success");
+          navigate("/allBooks");
+        } catch (error: SerializedError | FetchBaseQueryError | any) {
+          notify(error?.data?.message, "error");
+        }
+      }
+    });
+  };
 
   return (
     <section>
@@ -39,7 +70,10 @@ const BookDetails = () => {
               </Link>
             </div>
             <div className="w-full">
-              <Button className="w-full  p-6 rounded-none bg-[#FB641B]">
+              <Button
+                className="w-full  p-6 rounded-none bg-[#FB641B]"
+                onClick={() => handleBookDelete()}
+              >
                 <p className="text-2xl">Delete</p>
               </Button>
             </div>
