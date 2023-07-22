@@ -6,9 +6,11 @@ import {
   useDeleteBookMutation,
   useGetSingleBookQuery,
 } from "@/redux/features/Books/booksApi";
+import { usePostReviewMutation } from "@/redux/features/review/reviewApi";
 import notify from "@/shared/notify";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -19,6 +21,9 @@ const BookDetails = () => {
   const { data, isLoading, isError } = useGetSingleBookQuery(id);
   const [deleteBook] = useDeleteBookMutation();
   const navigate = useNavigate();
+  const [review, setReview] = useState("");
+
+  const [postReview] = usePostReviewMutation();
 
   const handleBookDelete = () => {
     Swal.fire({
@@ -40,6 +45,16 @@ const BookDetails = () => {
         }
       }
     });
+  };
+
+  const handlePostReview = async () => {
+    try {
+      await postReview({ id: id, message: review }).unwrap();
+      notify("Review is posted successfully", "success");
+      setReview("");
+    } catch (error: SerializedError | FetchBaseQueryError | any) {
+      notify(error?.data?.message, "error");
+    }
   };
 
   return (
@@ -103,8 +118,13 @@ const BookDetails = () => {
           <div className="flex flex-col gap-3 border p-3 my-10">
             <h1 className="text-2xl font-bold">Reviews</h1>
             <div className="flex flex-col md:flex-row justify-between gap-2 my-4">
-              <Textarea />
-              <Button variant="outline">Submit</Button>
+              <Textarea
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+              />
+              <Button variant="outline" onClick={() => handlePostReview()}>
+                Submit
+              </Button>
             </div>
             <div className="my-6 flex gap-3 items-center">
               <Avatar>
