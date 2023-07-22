@@ -60,8 +60,6 @@ const AllBooks = () => {
     });
   };
 
-  console.log("selected genre", selectedGenres.join(","));
-
   return (
     <section className="container mx-auto my-10">
       <div className="flex justify-between items-center">
