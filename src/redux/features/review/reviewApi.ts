@@ -8,8 +8,13 @@ const reviewApi = api.injectEndpoints({
         method: "POST",
         body: { message: message },
       }),
+      invalidatesTags: ["review"],
+    }),
+    getReviews: builder.query({
+      query: (id) => `/review/${id}`,
+      providesTags: ["review"],
     }),
   }),
 });
 
-export const { usePostReviewMutation } = reviewApi;
+export const { usePostReviewMutation, useGetReviewsQuery } = reviewApi;

@@ -6,7 +6,10 @@ import {
   useDeleteBookMutation,
   useGetSingleBookQuery,
 } from "@/redux/features/Books/booksApi";
-import { usePostReviewMutation } from "@/redux/features/review/reviewApi";
+import {
+  useGetReviewsQuery,
+  usePostReviewMutation,
+} from "@/redux/features/review/reviewApi";
 import notify from "@/shared/notify";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
@@ -16,13 +19,19 @@ import { BiSolidAddToQueue } from "react-icons/bi";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
+type IReview = {
+  id: string;
+  message: string;
+};
+
 const BookDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading, isError } = useGetSingleBookQuery(id);
   const [deleteBook] = useDeleteBookMutation();
   const navigate = useNavigate();
   const [review, setReview] = useState("");
 
+  const { data, isLoading, isError } = useGetSingleBookQuery(id);
+  const { data: reviewData } = useGetReviewsQuery(id);
   const [postReview] = usePostReviewMutation();
 
   const handleBookDelete = () => {
@@ -126,13 +135,15 @@ const BookDetails = () => {
                 Submit
               </Button>
             </div>
-            <div className="my-6 flex gap-3 items-center">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <p>hi..read this book. really enjoyed.</p>
-            </div>
+            {reviewData?.data?.map((review: IReview) => (
+              <div className="my-6 flex gap-3 items-center">
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <p>{review?.message}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
