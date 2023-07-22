@@ -2,17 +2,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { useGetSingleBookQuery } from "@/redux/features/Books/booksApi";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidAddToQueue } from "react-icons/bi";
+import { useParams } from "react-router-dom";
 
 const BookDetails = () => {
+  const { id } = useParams<{ id: string }>();
+  const { data, isLoading, isError } = useGetSingleBookQuery(id);
+  console.log("get single book", data);
   return (
     <section>
       <div className="flex flex-col md:flex-row gap-2 container mb-5">
         <div className="md:sticky top-20 bottom-0 flex flex-col justify-center  items-center h-full w-full md:w-3/5">
           <div className="border p-4 rounded-lg w-full flex justify-center relative">
             <img
-              src="https://epqkkxb65h3.exactdn.com/wp-content/uploads/2023/02/m-2908.jpg"
+              src={data?.data?.image}
               alt="book image"
               className="max-h-96 max-w-96"
             />
@@ -32,22 +37,22 @@ const BookDetails = () => {
 
         <div className="w-full rounded p-3 ">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">To Kill A Mockingbird</h1>
+            <h1 className="text-2xl font-bold">{data?.data?.title}</h1>
             <BiSolidAddToQueue
               className="text-2xl cursor-pointer"
               title="Add to reading list"
             />
           </div>
-          <h1 className="text-gray-600 my-3">by Harper Lee</h1>
+          <h1 className="text-gray-600 my-3">by {data?.data?.author}</h1>
           <Separator />
 
           <p className="flex justify-between w-full md:w-2/4 py-2">
             <span className="w-2/4">Genre</span>{" "}
-            <span className="w-2/4">Fiction</span>
+            <span className="w-2/4">{data?.data?.genre}</span>
           </p>
           <p className="flex justify-between w-full md:w-2/4 py-2">
             <span className="w-2/4">Published</span>{" "}
-            <span className="w-2/4">1960</span>
+            <span className="w-2/4">{data?.data?.publicationDate}</span>
           </p>
           {/* reviews */}
           <div className="flex flex-col gap-3 border p-3 my-10">

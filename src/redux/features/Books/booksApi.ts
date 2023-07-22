@@ -14,15 +14,16 @@ const booksApi = api.injectEndpoints({
         url: "/book/addBook",
         method: "POST",
         body: { ...data },
-        // headers: {
-        //   authorization: `Bearer ${localStorage.getItem("token")}`,
-
-        //   "Content-Type": "application/json",
-        // },
-        // user: `${localStorage.getItem("token")}`,
+      }),
+    }),
+    getSingleBook: builder.query({
+      query: (id) => ({
+        url: `/book/${id}`,
+        method: "GET",
       }),
     }),
   }),
 });
 
-export const { useGetBooksQuery, useAddBookMutation } = booksApi;
+export const { useGetBooksQuery, useAddBookMutation, useGetSingleBookQuery } =
+  booksApi;
