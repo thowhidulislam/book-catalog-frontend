@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAddBookMutation } from "@/redux/features/Books/booksApi";
 import { genreNames } from "@/shared/common";
+import notify from "@/shared/notify";
 import { IBook } from "@/types/globalTypes";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useState } from "react";
 import addBookImage from "../assets/addBook.svg";
 
@@ -15,34 +18,32 @@ const AddNewBook = () => {
     image: "",
   });
 
-  const [addBook, { isLoading }] = useAddBookMutation();
+  const [addBook, { error }] = useAddBookMutation();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    addBook(booksData);
-    // addBook({
-    //   title: "the alchemist233",
-    //   author: "paulo coelho",
-    //   genre: "fiction",
-    //   publicationDate: "1988",
-    //   image: "https://images-na.ssl-images-amazon.com/images/I/81nzxODnaJL.jpg",
-    // });
-    setBooksData({
-      title: "",
-      author: "",
-      genre: "",
-      publicationDate: "",
-      image: "",
-    });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      await addBook(booksData).unwrap();
+      // addBook({
+      //   title: "the alchemist233",
+      //   author: "paulo coelho",
+      //   genre: "fiction",
+      //   publicationDate: "1988",
+      //   image: "https://images-na.ssl-images-amazon.com/images/I/81nzxODnaJL.jpg",
+      // });
+      setBooksData({
+        title: "",
+        author: "",
+        genre: "",
+        publicationDate: "",
+        image: "",
+      });
+      notify("Book is added successfully", "success");
+    } catch (error: SerializedError | FetchBaseQueryError | any) {
+      notify(error?.data?.message, "error");
+    }
   };
 
-  console.log("books data", booksData);
-  const handleGenreChange = (selectedGenre: string) => {
-    setBooksData({
-      ...booksData,
-      genre: selectedGenre,
-    });
-  };
   console.log("books data", booksData);
 
   return (
@@ -70,6 +71,7 @@ const AddNewBook = () => {
                 className="mb-3"
                 placeholder="Book title"
                 type="text"
+                value={booksData?.title}
                 onChange={(e) =>
                   setBooksData({
                     ...booksData,
@@ -81,6 +83,7 @@ const AddNewBook = () => {
                 className="mb-3"
                 placeholder="Name of the author"
                 type="text"
+                value={booksData?.author}
                 onChange={(e) =>
                   setBooksData({
                     ...booksData,
@@ -110,6 +113,7 @@ const AddNewBook = () => {
                 className="my-3"
                 placeholder="Publication year"
                 type="text"
+                value={booksData?.publicationDate}
                 onChange={(e) =>
                   setBooksData({
                     ...booksData,
@@ -121,6 +125,7 @@ const AddNewBook = () => {
                 className="my-3"
                 placeholder="Image URL"
                 type="text"
+                value={booksData?.image}
                 onChange={(e) =>
                   setBooksData({
                     ...booksData,
