@@ -1,4 +1,5 @@
 import BookCard from "@/components/BookCard";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -8,6 +9,7 @@ import { genreNames, publicationYears } from "@/shared/common";
 import { IBook } from "@/types/globalTypes";
 import { useEffect, useState } from "react";
 import { RiFilter3Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const AllBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,60 +64,64 @@ const AllBooks = () => {
 
   return (
     <section className="container mx-auto my-10">
-      <div className="flex justify-end items-center">
-        <Input
-          className="w-2/4"
-          placeholder="Search by author name, title, or genre"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="flex justify-between items-center">
+        <Button asChild variant="outline">
+          <Link to="/add-new-book">Add New</Link>
+        </Button>
+        <div className="flex justify-end items-center w-2/4">
+          <Input
+            placeholder="Search by author name, title, or genre"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
-        <Sheet>
-          <SheetTrigger>
-            <div className="border p-1 ml-3 rounded-lg">
-              <RiFilter3Fill className="text-3xl cursor-pointer" />
-            </div>
-          </SheetTrigger>
-          <SheetContent>
-            <p className="text-xl font-bold mt-5 mb-1">Genre</p>
-            <Separator />
-            {genreNames.map((genreName) => (
-              <div className="flex items-center gap-2 my-2" key={genreName}>
-                <Checkbox
-                  id={genreName}
-                  checked={selectedGenres.includes(genreName)}
-                  onClick={() => handleGenre(genreName)}
-                />
-                <label
-                  htmlFor={genreName}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  {genreName}
-                </label>
+          <Sheet>
+            <SheetTrigger>
+              <div className="border p-1 ml-3 rounded-lg">
+                <RiFilter3Fill className="text-3xl cursor-pointer" />
               </div>
-            ))}
-            <p className="text-xl font-bold mt-5 mb-1">Publication Year</p>
-            <Separator />
-            {publicationYears.map((publicationYear) => (
-              <div
-                className="flex items-center gap-2 my-2"
-                key={publicationYear}
-              >
-                <Checkbox
-                  id={publicationYear}
-                  checked={selectedYears.includes(publicationYear)}
-                  value={publicationYear}
-                  onClick={() => handlePublicationYear(publicationYear)}
-                />
-                <label
-                  htmlFor={publicationYear}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            </SheetTrigger>
+            <SheetContent>
+              <p className="text-xl font-bold mt-5 mb-1">Genre</p>
+              <Separator />
+              {genreNames.map((genreName) => (
+                <div className="flex items-center gap-2 my-2" key={genreName}>
+                  <Checkbox
+                    id={genreName}
+                    checked={selectedGenres.includes(genreName)}
+                    onClick={() => handleGenre(genreName)}
+                  />
+                  <label
+                    htmlFor={genreName}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    {genreName}
+                  </label>
+                </div>
+              ))}
+              <p className="text-xl font-bold mt-5 mb-1">Publication Year</p>
+              <Separator />
+              {publicationYears.map((publicationYear) => (
+                <div
+                  className="flex items-center gap-2 my-2"
+                  key={publicationYear}
                 >
-                  {publicationYear}
-                </label>
-              </div>
-            ))}
-          </SheetContent>
-        </Sheet>
+                  <Checkbox
+                    id={publicationYear}
+                    checked={selectedYears.includes(publicationYear)}
+                    value={publicationYear}
+                    onClick={() => handlePublicationYear(publicationYear)}
+                  />
+                  <label
+                    htmlFor={publicationYear}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    {publicationYear}
+                  </label>
+                </div>
+              ))}
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 gap-4 my-8">
