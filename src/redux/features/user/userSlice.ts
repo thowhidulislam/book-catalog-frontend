@@ -17,7 +17,7 @@ const initialState: IUserState = {
   user: {
     email: null,
   },
-  isLoading: false,
+  isLoading: true,
 };
 
 const userSlice = createSlice({
@@ -26,6 +26,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<IPayload>) => {
       state.user.email = action.payload?.email;
+      state.isLoading = false;
     },
   },
 });

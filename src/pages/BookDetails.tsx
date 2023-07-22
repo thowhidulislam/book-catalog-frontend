@@ -5,12 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useGetSingleBookQuery } from "@/redux/features/Books/booksApi";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidAddToQueue } from "react-icons/bi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const BookDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useGetSingleBookQuery(id);
-  console.log("get single book", data);
+
   return (
     <section>
       <div className="flex flex-col md:flex-row gap-2 container mb-5">
@@ -26,12 +26,23 @@ const BookDetails = () => {
             </div>
           </div>
           <div className="w-full flex gap-2 justify-center items-center text-gray-600 my-3">
-            <Button className="w-full p-6 bg-[#FF9F00] rounded-none">
-              <p className="text-2xl ">Edit</p>
-            </Button>
-            <Button className="w-full  p-6 rounded-none bg-[#FB641B]">
-              <p className="text-2xl">Delete</p>
-            </Button>
+            <div className="w-full">
+              <Link
+                to={"/edit-book"}
+                state={{
+                  id: data?.data?.id,
+                }}
+              >
+                <Button className="w-full p-6 bg-[#FF9F00] rounded-none">
+                  <p className="text-2xl ">Edit</p>
+                </Button>
+              </Link>
+            </div>
+            <div className="w-full">
+              <Button className="w-full  p-6 rounded-none bg-[#FB641B]">
+                <p className="text-2xl">Delete</p>
+              </Button>
+            </div>
           </div>
         </div>
 
