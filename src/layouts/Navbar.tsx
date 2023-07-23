@@ -48,11 +48,13 @@ const Navbar = () => {
                   <Link to="/allBooks">All Books</Link>
                 </Button>
               </li>
-              <li className="mr-2">
-                <Button variant="link" asChild>
-                  <Link to="/add-new-book">Add New Book</Link>
-                </Button>
-              </li>
+              {user?.email && (
+                <li className="mr-2">
+                  <Button variant="link" asChild>
+                    <Link to="/add-new-book">Add New Book</Link>
+                  </Button>
+                </li>
+              )}
               <li>
                 <DropdownMenu>
                   <DropdownMenuTrigger>

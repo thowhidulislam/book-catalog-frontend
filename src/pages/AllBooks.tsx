@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useGetBooksQuery } from "@/redux/features/Books/booksApi";
+import { setUser } from "@/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { genreNames, publicationYears } from "@/shared/common";
 import { IBook } from "@/types/globalTypes";
 import { useEffect, useState } from "react";
@@ -34,6 +36,13 @@ const AllBooks = () => {
       pollingInterval: 40000,
     }
   );
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    dispatch(setUser(user ? JSON.parse(user) : null));
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem("selectedYears", selectedYears.join(","));
@@ -63,9 +72,11 @@ const AllBooks = () => {
   return (
     <section className="container mx-auto my-10">
       <div className="flex justify-between items-center">
-        <Button asChild variant="outline">
-          <Link to="/add-new-book">Add New</Link>
-        </Button>
+        {user?.email && (
+          <Button asChild variant="outline">
+            <Link to="/add-new-book">Add New</Link>
+          </Button>
+        )}
         <div className="flex justify-end items-center w-2/4">
           <Input
             placeholder="Search by author name, title, or genre"

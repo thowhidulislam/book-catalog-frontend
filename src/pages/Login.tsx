@@ -28,7 +28,7 @@ const Login = () => {
       await loginData(userData).unwrap();
       dispatch(setUser({ email: userData.email }));
       navigate("/");
-      notify("Loggedin Successfully", "success");
+      notify("Logged in Successfully", "success");
     } catch (error: SerializedError | FetchBaseQueryError | any) {
       notify(error?.data?.message, "error");
     }

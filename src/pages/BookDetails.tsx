@@ -11,11 +11,13 @@ import {
   useGetReviewsQuery,
   usePostReviewMutation,
 } from "@/redux/features/review/reviewApi";
+import { setUser } from "@/redux/features/user/userSlice";
 import {
   useDeleteWishlistBookMutation,
   useGetWishlistBooksQuery,
   usePostWishlistMutation,
 } from "@/redux/features/wishlist/wishlistApi";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import notify from "@/shared/notify";
 import { IWishlistBook } from "@/types/globalTypes";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -53,6 +55,13 @@ const BookDetails = () => {
   const [postWishlist] = usePostWishlistMutation();
   const [deleteWishlistBook] = useDeleteWishlistBookMutation();
   const [postReadingList] = usePostReadingListMutation();
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    dispatch(setUser(user ? JSON.parse(user) : null));
+  }, [dispatch]);
 
   const handleWishlist = async () => {
     try {
@@ -107,7 +116,6 @@ const BookDetails = () => {
   const handlePostReview = async () => {
     try {
       await postReview({ id: id, message: review }).unwrap();
-      notify("Review is posted successfully", "success");
       setReview("");
     } catch (error: SerializedError | FetchBaseQueryError | any) {
       notify(error?.data?.message, "error");
@@ -142,28 +150,30 @@ const BookDetails = () => {
               />
             </div>
           </div>
-          <div className="w-full flex gap-2 justify-center items-center text-gray-600 my-3">
-            <div className="w-full">
-              <Link
-                to={"/edit-book"}
-                state={{
-                  id: data?.data?.id,
-                }}
-              >
-                <Button className="w-full p-6 bg-[#FF9F00] rounded-none">
-                  <p className="text-2xl ">Edit</p>
+          {user?.email && (
+            <div className="w-full flex gap-2 justify-center items-center text-gray-600 my-3">
+              <div className="w-full">
+                <Link
+                  to={"/edit-book"}
+                  state={{
+                    id: data?.data?.id,
+                  }}
+                >
+                  <Button className="w-full p-6 bg-[#FF9F00] rounded-none">
+                    <p className="text-2xl ">Edit</p>
+                  </Button>
+                </Link>
+              </div>
+              <div className="w-full">
+                <Button
+                  className="w-full  p-6 rounded-none bg-[#FB641B]"
+                  onClick={() => handleBookDelete()}
+                >
+                  <p className="text-2xl">Delete</p>
                 </Button>
-              </Link>
+              </div>
             </div>
-            <div className="w-full">
-              <Button
-                className="w-full  p-6 rounded-none bg-[#FB641B]"
-                onClick={() => handleBookDelete()}
-              >
-                <p className="text-2xl">Delete</p>
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="w-full rounded p-3 ">

@@ -132,7 +132,7 @@ const AddNewBook = () => {
                 }
               />
               <Button className="text-gray-200 my-8 w-full" type="submit">
-                Upload New Book
+                Submit
               </Button>
               <p className="text-sm text-gray-500">
                 By clicking continue, you agree to our Terms of Service and

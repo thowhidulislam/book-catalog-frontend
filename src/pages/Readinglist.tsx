@@ -62,7 +62,9 @@ const Readinglist = () => {
               <td className="border">
                 <div className="flex justify-center items-center">
                   <IoMdDoneAll
-                    title="Mark as read"
+                    title={`${
+                      book?.isReading ? "Finished reading" : "Mark as read"
+                    }`}
                     className={`${
                       book?.isReading ? "text-green-500" : ""
                     } text-3xl cursor-pointer`}

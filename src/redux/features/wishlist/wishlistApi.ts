@@ -22,6 +22,7 @@ const wishlistApi = api.injectEndpoints({
         url: `/wishlist/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["wishlist"],
     }),
   }),
 });
