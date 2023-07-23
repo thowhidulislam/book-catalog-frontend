@@ -19,10 +19,10 @@ const initialState: IReadingListState = {
   ],
 };
 
-const readingListSlice = createSlice({
+const readinglistSlice = createSlice({
   name: "readingList",
   initialState,
   reducers: {},
 });
 
-export default readingListSlice.reducer;
+export default readinglistSlice.reducer;

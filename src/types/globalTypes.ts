@@ -6,6 +6,7 @@ export type IBook = {
   publicationDate: string;
   image: string;
   addedBy?: string;
+  status?: string;
 };
 
 export type IUser = {

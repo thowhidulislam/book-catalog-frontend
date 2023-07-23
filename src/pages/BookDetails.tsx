@@ -6,6 +6,7 @@ import {
   useDeleteBookMutation,
   useGetSingleBookQuery,
 } from "@/redux/features/Books/booksApi";
+import { usePostReadingListMutation } from "@/redux/features/readinglist/readinglistApi";
 import {
   useGetReviewsQuery,
   usePostReviewMutation,
@@ -51,6 +52,7 @@ const BookDetails = () => {
 
   const [postWishlist] = usePostWishlistMutation();
   const [deleteWishlistBook] = useDeleteWishlistBookMutation();
+  const [postReadingList] = usePostReadingListMutation();
 
   const handleWishlist = async () => {
     try {
@@ -112,6 +114,15 @@ const BookDetails = () => {
     }
   };
 
+  const handleReadinglist = async () => {
+    try {
+      await postReadingList({ id: id }).unwrap();
+      notify("Book is added to reading list", "success");
+    } catch (error: SerializedError | FetchBaseQueryError | any) {
+      notify(error?.data?.message, "error");
+    }
+  };
+
   return (
     <section>
       <div className="flex flex-col md:flex-row gap-2 container mb-5">
@@ -161,6 +172,7 @@ const BookDetails = () => {
             <BiSolidAddToQueue
               className="text-2xl cursor-pointer"
               title="Add to reading list"
+              onClick={() => handleReadinglist()}
             />
           </div>
           <h1 className="text-gray-600 my-3">by {data?.data?.author}</h1>
