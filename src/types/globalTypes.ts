@@ -1,5 +1,5 @@
 export type IBook = {
-  _id?: number | undefined;
+  _id?: string | undefined;
   title: string;
   author: string;
   genre: string;
@@ -13,4 +13,10 @@ export type IUser = {
   email: string;
   name: string;
   role: string;
+};
+
+export type IWishlistBook = {
+  _id: string | number;
+  book: IBook;
+  user: IUser;
 };

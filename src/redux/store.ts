@@ -4,6 +4,7 @@ import userReducer from "@/redux/features/user/userSlice";
 import wishlistReducer from "@/redux/features/wishlist/wishlistSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./api/apiSlice";
+import readinglistReducer from "./features/readingList/readingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     user: userReducer,
     review: reviewReducer,
     wishlist: wishlistReducer,
+    readingList: readinglistReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

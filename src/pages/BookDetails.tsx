@@ -10,10 +10,16 @@ import {
   useGetReviewsQuery,
   usePostReviewMutation,
 } from "@/redux/features/review/reviewApi";
+import {
+  useDeleteWishlistBookMutation,
+  useGetWishlistBooksQuery,
+  usePostWishlistMutation,
+} from "@/redux/features/wishlist/wishlistApi";
 import notify from "@/shared/notify";
+import { IWishlistBook } from "@/types/globalTypes";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -30,9 +36,49 @@ const BookDetails = () => {
   const navigate = useNavigate();
   const [review, setReview] = useState("");
 
-  const { data, isLoading, isError } = useGetSingleBookQuery(id);
+  const { data, isLoading, isError } = useGetSingleBookQuery(id, {
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 40000,
+  });
   const { data: reviewData } = useGetReviewsQuery(id);
   const [postReview] = usePostReviewMutation();
+  const { data: wishlistBooks } = useGetWishlistBooksQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 40000,
+  });
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  const [postWishlist] = usePostWishlistMutation();
+  const [deleteWishlistBook] = useDeleteWishlistBookMutation();
+
+  const handleWishlist = async () => {
+    try {
+      if (isInWishlist) {
+        await deleteWishlistBook({ id: id }).unwrap();
+        notify("Book is removed from wishlist", "error");
+      } else {
+        // If the book is not in the wishlist, perform POST request
+        await postWishlist({ id: id }).unwrap();
+        notify("Book is added to wishlist", "success");
+      }
+
+      // Toggle the isInWishlist state after the request is successful
+      setIsInWishlist((prevIsInWishlist) => !prevIsInWishlist);
+    } catch (error: SerializedError | FetchBaseQueryError | any) {
+      notify(error?.data?.message, "error");
+    }
+  };
+
+  useEffect(() => {
+    if (wishlistBooks?.data.length > 0) {
+      const isBookInWishlist = wishlistBooks?.data.find(
+        (book: IWishlistBook) => book?.book._id === id
+      );
+      console.log("isBookInWishlist", isBookInWishlist);
+      isBookInWishlist && setIsInWishlist(isBookInWishlist?.book._id);
+    }
+  }, [wishlistBooks?.data, id]);
 
   const handleBookDelete = () => {
     Swal.fire({
@@ -77,7 +123,12 @@ const BookDetails = () => {
               className="max-h-96 max-w-96"
             />
             <div className="absolute top-1 right-2 bg-white border shadow-lg rounded-full p-2">
-              <AiFillHeart className=" text-2xl cursor-pointer hover:text-red-500" />
+              <AiFillHeart
+                className={`text-2xl cursor-pointer ${
+                  isInWishlist ? "text-red-500" : ""
+                }`}
+                onClick={() => handleWishlist()}
+              />
             </div>
           </div>
           <div className="w-full flex gap-2 justify-center items-center text-gray-600 my-3">

@@ -3,13 +3,9 @@ import {
   useGetWishlistBooksQuery,
   usePostWishlistMutation,
 } from "@/redux/features/wishlist/wishlistApi";
-import {
-  addBookToWishlist,
-  removeBookFromWishlist,
-} from "@/redux/features/wishlist/wishlistSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import notify from "@/shared/notify";
-import { IBook, IUser } from "@/types/globalTypes";
+import { IBook, IWishlistBook } from "@/types/globalTypes";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
@@ -20,19 +16,12 @@ type IBookCard = {
   booksData: IBook;
 };
 
-type IWishlistBook = {
-  _id: string | number;
-  book: IBook;
-  user: IUser;
-};
-
 const BookCard = ({ booksData }: IBookCard) => {
   const { data } = useGetWishlistBooksQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 40000,
   });
 
-  const [isAvailable, setIsAvailable] = useState<number[]>([]);
   const [isInWishlist, setIsInWishlist] = useState(false);
 
   const [postWishlist] = usePostWishlistMutation();
@@ -43,12 +32,10 @@ const BookCard = ({ booksData }: IBookCard) => {
     try {
       if (isInWishlist) {
         await deleteWishlistBook({ id: booksData._id }).unwrap();
-        dispatch(removeBookFromWishlist({ _id: booksData._id }));
         notify("Book is removed from wishlist", "error");
       } else {
         // If the book is not in the wishlist, perform POST request
         await postWishlist({ id: booksData?._id }).unwrap();
-        dispatch(addBookToWishlist({ _id: booksData._id }));
         notify("Book is added to wishlist", "success");
       }
 
@@ -66,14 +53,8 @@ const BookCard = ({ booksData }: IBookCard) => {
       );
 
       isBookInWishlist && setIsInWishlist(isBookInWishlist?.book._id);
-      isBookInWishlist &&
-        isAvailable.filter(
-          (id) =>
-            id === isBookInWishlist?.book._id &&
-            setIsAvailable([...isAvailable, isBookInWishlist?.book._id])
-        );
     }
-  }, [data?.data, booksData?._id, dispatch, isAvailable]);
+  }, [data?.data, booksData?._id, dispatch]);
 
   return (
     <div>
