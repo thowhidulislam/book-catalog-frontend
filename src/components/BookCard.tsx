@@ -1,10 +1,14 @@
-import { usePostWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
+import {
+  useGetWishlistBooksQuery,
+  usePostWishlistMutation,
+} from "@/redux/features/wishlist/wishlistApi";
 import { addBookToWishlist } from "@/redux/features/wishlist/wishlistSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import notify from "@/shared/notify";
-import { IBook } from "@/types/globalTypes";
+import { IBook, IUser } from "@/types/globalTypes";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
@@ -12,9 +16,22 @@ type IBookCard = {
   booksData: IBook;
 };
 
+type IWishlistBook = {
+  _id: string | number;
+  book: IBook;
+  user: IUser;
+};
+
 const BookCard = ({ booksData }: IBookCard) => {
+  const { data } = useGetWishlistBooksQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 40000,
+  });
+
+  console.log("data wishlist", data);
   const { books } = useAppSelector((state) => state.wishlist);
-  console.log("books", books);
+  const [isAvailable, setIsAvailable] = useState(Number);
+
   const [postWishlist] = usePostWishlistMutation();
   const dispatch = useAppDispatch();
 
@@ -28,7 +45,14 @@ const BookCard = ({ booksData }: IBookCard) => {
     }
   };
 
-  const isBookInWishlist = books?.find((book) => book?._id === booksData?._id);
+  useEffect(() => {
+    if (data?.data.length > 0) {
+      const isBookInWishlist = data?.data?.find(
+        (book: IWishlistBook) => book?.book._id === booksData?._id
+      );
+      isBookInWishlist && setIsAvailable(isBookInWishlist?.book._id);
+    }
+  }, [data?.data, booksData?._id, dispatch]);
 
   return (
     <div>
@@ -47,7 +71,7 @@ const BookCard = ({ booksData }: IBookCard) => {
             </Link>
             <AiFillHeart
               className={`text-2xl cursor-pointer ${
-                isBookInWishlist && booksData?._id && "text-red-500"
+                isAvailable === booksData?._id && "text-red-500"
               }`}
               onClick={() => handleWishlist()}
             />

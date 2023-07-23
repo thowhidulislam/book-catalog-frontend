@@ -9,7 +9,14 @@ const wishlistApi = api.injectEndpoints({
         body: { bookId: id },
       }),
     }),
+    getWishlistBooks: builder.query({
+      query: () => ({
+        url: "/wishlist/getBooks",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { usePostWishlistMutation } = wishlistApi;
+export const { usePostWishlistMutation, useGetWishlistBooksQuery } =
+  wishlistApi;

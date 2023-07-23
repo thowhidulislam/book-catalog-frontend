@@ -7,3 +7,10 @@ export type IBook = {
   image: string;
   addedBy?: string;
 };
+
+export type IUser = {
+  _id: string;
+  email: string;
+  name: string;
+  role: string;
+};
