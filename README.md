@@ -36,10 +36,10 @@
 
 A list of books is fetched from an API using RTK Query and displayed the list of books. Each book have key information such as
 
-* Title
-* Author
-* Genre
-* Publication Date
+*Title
+*Author
+*Genre
+*Publication Date
 
 - Implemented a search bar that allows users to search for books based on criteria such as title, author, or genre.
 
@@ -56,11 +56,11 @@ A list of books is fetched from an API using RTK Query and displayed the list of
 
 - When a user clicks on a book from the list, displays a detailed view of the book. The detailed view includes the following information:
 
-* Title
-* Author
-* Genre
-* Publication Date
-* Reviews
+*Title
+*Author
+*Genre
+*Publication Date
+*Reviews
 The reviews are displayed on the book details page.
 
 #### Add two buttons to the book details page:
