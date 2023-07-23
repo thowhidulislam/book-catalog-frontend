@@ -4,10 +4,12 @@ type IWishlistState = {
   books: {
     _id: number | undefined;
   }[];
+  isLoading?: boolean;
 };
 
 const initialState: IWishlistState = {
   books: [],
+  isLoading: true,
 };
 
 const wishlistSlice = createSlice({

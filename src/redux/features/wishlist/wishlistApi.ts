@@ -8,12 +8,14 @@ const wishlistApi = api.injectEndpoints({
         method: "POST",
         body: { bookId: id },
       }),
+      invalidatesTags: ["wishlist"],
     }),
     getWishlistBooks: builder.query({
       query: () => ({
         url: "/wishlist/getBooks",
         method: "GET",
       }),
+      providesTags: ["wishlist"],
     }),
   }),
 });

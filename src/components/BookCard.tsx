@@ -28,7 +28,6 @@ const BookCard = ({ booksData }: IBookCard) => {
     pollingInterval: 40000,
   });
 
-  console.log("data wishlist", data);
   const { books } = useAppSelector((state) => state.wishlist);
   const [isAvailable, setIsAvailable] = useState(Number);
 
