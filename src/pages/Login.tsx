@@ -49,19 +49,19 @@ const Login = () => {
 
   return (
     <section>
-      <div className="flex min-h-screen relative">
+      <div className="flex flex-col md:flex-row min-h-screen relative">
         <Button variant="outline" asChild className="absolute right-5 top-5">
           <Link to="/signup">Sign up</Link>
         </Button>
-        <div className="w-2/4 h-screen bg-gray-200">
+        <div className="w-full md:w-2/4 md:h-screen bg-gray-200">
           <img
             src={loginImage}
             alt="login"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain lg:object-cover"
           />
         </div>
-        <div className="w-2/4 h-screen flex flex-col justify-center items-center">
-          <div className="w-2/4 text-center">
+        <div className="w-full md:w-2/4 md:h-screen flex flex-col justify-center items-center">
+          <div className="w-full md:w-2/4 my-3 md:my-0 text-center">
             <h1 className="text-2xl font-bold text-gray-600 mb-3">
               Login to your account
             </h1>
@@ -69,7 +69,10 @@ const Login = () => {
               Enter your email address below
             </p>
           </div>
-          <form className="w-2/4" onSubmit={handleLoginSubmit}>
+          <form
+            className="w-full md:w-2/4 px-3 md:px-0"
+            onSubmit={handleLoginSubmit}
+          >
             <Input
               className="mb-3"
               placeholder="Email Address"
@@ -92,7 +95,7 @@ const Login = () => {
             <Button className="text-gray-200 my-8 w-full" type="submit">
               Login to your account
             </Button>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 mb-5 md:mb-2">
               By clicking continue, you agree to our Terms of Service and
               Privacy Policy.
             </p>

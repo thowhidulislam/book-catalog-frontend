@@ -71,13 +71,13 @@ const AllBooks = () => {
 
   return (
     <section className="container mx-auto my-10">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center">
         {user?.email && (
           <Button asChild variant="outline">
             <Link to="/add-new-book">Add New</Link>
           </Button>
         )}
-        <div className="flex justify-end items-center w-2/4">
+        <div className="flex justify-end items-center my-2 md:my-0 w-full md:w-2/4">
           <Input
             placeholder="Search by author name, title, or genre"
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -133,7 +133,7 @@ const AllBooks = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 my-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 my-8">
         {data?.data.map((book: IBook) => (
           <BookCard booksData={book} />
         ))}

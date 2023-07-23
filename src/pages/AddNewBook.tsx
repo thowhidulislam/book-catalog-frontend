@@ -46,102 +46,100 @@ const AddNewBook = () => {
 
   return (
     <section>
-      <section>
-        <div className={`h-calc(100vh - 4rem) flex relative `}>
-          <div className="w-2/4  bg-gray-200">
-            <img
-              src={addBookImage}
-              alt="add book image"
-              className="w-full  object-cover"
-            />
-          </div>
-          <div className="w-2/4 flex flex-col justify-center items-center">
-            <div className="w-2/4 text-center">
-              <h1 className="text-2xl font-bold text-gray-600 mb-3">
-                Add New Book
-              </h1>
-              <p className="text-sm text-gray-500 mb-6">
-                Enter your book information to add the book in the website
-              </p>
-            </div>
-            <form className="w-2/4" onSubmit={handleSubmit}>
-              <Input
-                className="mb-3"
-                placeholder="Book title"
-                type="text"
-                value={booksData?.title}
-                onChange={(e) =>
-                  setBooksData({
-                    ...booksData,
-                    title: e.target.value,
-                  })
-                }
-              />
-              <Input
-                className="mb-3"
-                placeholder="Name of the author"
-                type="text"
-                value={booksData?.author}
-                onChange={(e) =>
-                  setBooksData({
-                    ...booksData,
-                    author: e.target.value,
-                  })
-                }
-              />
-
-              <select
-                className="flex h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px] text-[#8894A6]"
-                onChange={(e) =>
-                  setBooksData({ ...booksData, genre: e.target.value })
-                }
-              >
-                {genreNames.map((genreName) => (
-                  <option
-                    value={genreName}
-                    key={genreName}
-                    className="text-[#8894A6]"
-                  >
-                    {genreName}
-                  </option>
-                ))}
-              </select>
-
-              <Input
-                className="my-3"
-                placeholder="Publication year"
-                type="text"
-                value={booksData?.publicationDate}
-                onChange={(e) =>
-                  setBooksData({
-                    ...booksData,
-                    publicationDate: e.target.value,
-                  })
-                }
-              />
-              <Input
-                className="my-3"
-                placeholder="Image URL"
-                type="text"
-                value={booksData?.image}
-                onChange={(e) =>
-                  setBooksData({
-                    ...booksData,
-                    image: e.target.value,
-                  })
-                }
-              />
-              <Button className="text-gray-200 my-8 w-full" type="submit">
-                Submit
-              </Button>
-              <p className="text-sm text-gray-500">
-                By clicking continue, you agree to our Terms of Service and
-                Privacy Policy.
-              </p>
-            </form>
-          </div>
+      <div className={`md:h-screen flex flex-col md:flex-row relative `}>
+        <div className="w-full md:w-2/4 bg-gray-200">
+          <img
+            src={addBookImage}
+            alt="add book image"
+            className="w-full  object-cover"
+          />
         </div>
-      </section>
+        <div className="w-full md:w-2/4 flex flex-col justify-center items-center px-3 md:px-0">
+          <div className="w-full md:w-2/4 text-center">
+            <h1 className="text-2xl font-bold text-gray-600 my-3 md:mb-3">
+              Add New Book
+            </h1>
+            <p className="text-sm text-gray-500 mb-6 px-3 md:px-0">
+              Enter your book information to add the book in the website
+            </p>
+          </div>
+          <form className="w-full lg:w-2/4 md:px-3" onSubmit={handleSubmit}>
+            <Input
+              className="mb-3"
+              placeholder="Book title"
+              type="text"
+              value={booksData?.title}
+              onChange={(e) =>
+                setBooksData({
+                  ...booksData,
+                  title: e.target.value,
+                })
+              }
+            />
+            <Input
+              className="mb-3"
+              placeholder="Name of the author"
+              type="text"
+              value={booksData?.author}
+              onChange={(e) =>
+                setBooksData({
+                  ...booksData,
+                  author: e.target.value,
+                })
+              }
+            />
+
+            <select
+              className="flex h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px] text-[#8894A6]"
+              onChange={(e) =>
+                setBooksData({ ...booksData, genre: e.target.value })
+              }
+            >
+              {genreNames.map((genreName) => (
+                <option
+                  value={genreName}
+                  key={genreName}
+                  className="text-[#8894A6]"
+                >
+                  {genreName}
+                </option>
+              ))}
+            </select>
+
+            <Input
+              className="my-3"
+              placeholder="Publication year"
+              type="text"
+              value={booksData?.publicationDate}
+              onChange={(e) =>
+                setBooksData({
+                  ...booksData,
+                  publicationDate: e.target.value,
+                })
+              }
+            />
+            <Input
+              className="my-3"
+              placeholder="Image URL"
+              type="text"
+              value={booksData?.image}
+              onChange={(e) =>
+                setBooksData({
+                  ...booksData,
+                  image: e.target.value,
+                })
+              }
+            />
+            <Button className="text-gray-200 my-8 w-full" type="submit">
+              Submit
+            </Button>
+            <p className="text-sm text-gray-500 pb-5 md:pb-0">
+              By clicking continue, you agree to our Terms of Service and
+              Privacy Policy.
+            </p>
+          </form>
+        </div>
+      </div>
     </section>
   );
 };

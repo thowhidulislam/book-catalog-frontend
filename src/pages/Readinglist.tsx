@@ -42,40 +42,42 @@ const Readinglist = () => {
   };
 
   return (
-    <section className="container mx-auto px-8 py-8 overflow-auto">
+    <section className="container mx-auto px-8 py-8">
       <h1 className="text-2xl font-bold text-gray-600">Reading List</h1>
-      <table className="my-3 border w-full text-center text-gray-600">
-        <thead>
-          <tr>
-            {tableHeaders.map((header) => (
-              <th className="border p-2">{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data?.data.map((book: IWishlistBook) => (
-            <tr key={book._id}>
-              <td className="border p-2">{book?.book?.title}</td>
-              <td className="border p-2">{book?.book?.author}</td>
-              <td className="border p-2">{book?.book?.genre}</td>
-              <td className="border p-2">{book?.book?.publicationDate}</td>
-              <td className="border">
-                <div className="flex justify-center items-center">
-                  <IoMdDoneAll
-                    title={`${
-                      book?.isReading ? "Finished reading" : "Mark as read"
-                    }`}
-                    className={`${
-                      book?.isReading ? "text-green-500" : ""
-                    } text-3xl cursor-pointer`}
-                    onClick={() => handleMarkAsRead(book?.book?._id)}
-                  />
-                </div>
-              </td>
+      <div className="overflow-auto">
+        <table className="my-3 border w-full text-center text-gray-600">
+          <thead>
+            <tr>
+              {tableHeaders.map((header) => (
+                <th className="border p-2">{header}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data?.data.map((book: IWishlistBook) => (
+              <tr key={book._id}>
+                <td className="border p-2">{book?.book?.title}</td>
+                <td className="border p-2">{book?.book?.author}</td>
+                <td className="border p-2">{book?.book?.genre}</td>
+                <td className="border p-2">{book?.book?.publicationDate}</td>
+                <td className="border">
+                  <div className="flex justify-center items-center">
+                    <IoMdDoneAll
+                      title={`${
+                        book?.isReading ? "Finished reading" : "Mark as read"
+                      }`}
+                      className={`${
+                        book?.isReading ? "text-green-500" : ""
+                      } text-3xl cursor-pointer`}
+                      onClick={() => handleMarkAsRead(book?.book?._id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 };

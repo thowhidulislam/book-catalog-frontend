@@ -27,19 +27,19 @@ const SignUp = () => {
 
   return (
     <section>
-      <div className="flex min-h-screen relative">
+      <div className="flex flex-col md:flex-row md:min-h-screen relative">
         <Button variant="outline" asChild className="absolute right-5 top-5">
           <Link to="/login">Login</Link>
         </Button>
-        <div className="w-2/4 h-screen bg-gray-200">
+        <div className="w-full md:w-2/4 md:h-screen bg-gray-200">
           <img
             src={signupImage}
             alt="signup"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain lg:object-cover"
           />
         </div>
-        <div className="w-2/4 h-screen flex flex-col justify-center items-center">
-          <div className="w-2/4 text-center">
+        <div className="w-full md:w-2/4 md:h-screen flex flex-col justify-center items-center">
+          <div className="w-full md:w-2/4 text-center my-3 md:my-0">
             <h1 className="text-2xl font-bold text-gray-600 mb-3">
               Create an account
             </h1>
@@ -47,7 +47,10 @@ const SignUp = () => {
               Enter your email address to create your account
             </p>
           </div>
-          <form className="w-2/4" onSubmit={handleCreateAccountSubmit}>
+          <form
+            className="w-full md:w-2/4 px-3 md:px-0"
+            onSubmit={handleCreateAccountSubmit}
+          >
             <Input
               className="mb-3"
               placeholder="Name"
@@ -78,15 +81,11 @@ const SignUp = () => {
                 setUserData({ ...userData, password: e.target.value })
               }
             />
-            {/* <Input
-                className=""
-                placeholder="Confirm your password"
-                type="password"
-              /> */}
+
             <Button className="text-gray-200 my-8 w-full" type="submit">
               Create account
             </Button>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 pb-5 md:pb-0">
               By clicking continue, you agree to our Terms of Service and
               Privacy Policy.
             </p>
