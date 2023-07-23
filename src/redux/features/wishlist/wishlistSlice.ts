@@ -24,9 +24,20 @@ const wishlistSlice = createSlice({
     ) => {
       state.books.push(action.payload);
     },
+    removeBookFromWishlist: (
+      state,
+      action: PayloadAction<{
+        _id: number | undefined;
+      }>
+    ) => {
+      state.books = state.books.filter(
+        (book) => book._id !== action.payload._id
+      );
+    },
   },
 });
 
-export const { addBookToWishlist } = wishlistSlice.actions;
+export const { addBookToWishlist, removeBookFromWishlist } =
+  wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

@@ -75,12 +75,20 @@ const Navbar = () => {
                       </>
                     )}
                     {user?.email && (
-                      <DropdownMenuItem
-                        onClick={handleLogout}
-                        className="cursor-pointer"
-                      >
-                        Log out
-                      </DropdownMenuItem>
+                      <>
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Link to="/wishlist">Wishlist</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Link to="/readinglist">Reading List</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={handleLogout}
+                          className="cursor-pointer"
+                        >
+                          Log out
+                        </DropdownMenuItem>
+                      </>
                     )}
                   </DropdownMenuContent>
                 </DropdownMenu>

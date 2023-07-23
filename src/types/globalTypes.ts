@@ -1,5 +1,5 @@
 export type IBook = {
-  _id?: number;
+  _id?: number | undefined;
   title: string;
   author: string;
   genre: string;

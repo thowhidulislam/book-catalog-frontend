@@ -5,7 +5,9 @@ import EditBook from "@/pages/EditBook";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
+import Readinglist from "@/pages/Readinglist";
 import SignUp from "@/pages/SignUp";
+import Wishlist from "@/pages/Wishlist";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import PrivateRoute from "./PrivateRoute";
@@ -34,6 +36,14 @@ const routes = createBrowserRouter([
             <EditBook />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "/readinglist",
+        element: <Readinglist />,
       },
       {
         path: "/add-new-book",
