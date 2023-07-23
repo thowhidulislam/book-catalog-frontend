@@ -66,12 +66,12 @@ The reviews are displayed on the book details page.
 
 #### Add two buttons to the book details page:
 
-   . Edit Button
-   . Delete Button
+- Edit Button
+- Delete Button
 
-- When a user clicks on the Edit Book button, they would be redirected to the edit-book page. When a user clicks on the Delete Book button, they would see a confirmation dialogue to confirm that they want to delete the book.
+When a user clicks on the Edit Book button, they would be redirected to the edit-book page. When a user clicks on the Delete Book button, they would see a confirmation dialogue to confirm that they want to delete the book.
 
-- Authenticated users would be able to leave reviews for books. Provided a submit box for submitting a review.
+Authenticated users would be able to leave reviews for books. Provided a submit box for submitting a review.
 
 ### Edit Books Page:
 
