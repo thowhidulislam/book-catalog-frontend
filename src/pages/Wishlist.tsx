@@ -8,7 +8,7 @@ type IWishlistBook = {
 };
 
 const Wishlist = () => {
-  const { data, isLoading, isError } = useGetWishlistBooksQuery(undefined, {
+  const { data } = useGetWishlistBooksQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 40000,
   });

@@ -16,13 +16,12 @@ type IWishlistBook = {
 };
 
 const Readinglist = () => {
-  const { data, isLoading, isError } = useGetReadingListQuery(undefined, {
+  const { data } = useGetReadingListQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 40000,
   });
 
-  const [updateReadingList, { data: updatedData }] =
-    useUpdateReadingListMutation();
+  const [updateReadingList] = useUpdateReadingListMutation();
 
   const tableHeaders = [
     "Book Name",

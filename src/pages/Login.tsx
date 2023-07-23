@@ -16,10 +16,10 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [loginData, { data, error }] = useLoginUserMutation();
+  const [loginData, { data }] = useLoginUserMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user, isLoading } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

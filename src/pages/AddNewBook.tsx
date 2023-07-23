@@ -18,7 +18,7 @@ const AddNewBook = () => {
     image: "",
   });
 
-  const [addBook, { error }] = useAddBookMutation();
+  const [addBook] = useAddBookMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {

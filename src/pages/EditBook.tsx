@@ -24,7 +24,7 @@ const EditBook = () => {
     image: data?.data?.image,
   });
 
-  const [updateBook, { error }] = useUpdateBookMutation();
+  const [updateBook] = useUpdateBookMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {

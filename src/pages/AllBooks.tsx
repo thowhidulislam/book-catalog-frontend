@@ -25,7 +25,7 @@ const AllBooks = () => {
     return storedGenres ? storedGenres.split(",") : [];
   });
 
-  const { data, isLoading, isError } = useGetBooksQuery(
+  const { data } = useGetBooksQuery(
     {
       searchTerm,
       publicationDate: selectedYears.join(","),

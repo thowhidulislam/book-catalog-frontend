@@ -39,7 +39,7 @@ const BookDetails = () => {
   const navigate = useNavigate();
   const [review, setReview] = useState("");
 
-  const { data, isLoading, isError } = useGetSingleBookQuery(id, {
+  const { data } = useGetSingleBookQuery(id, {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
     pollingInterval: 40000,

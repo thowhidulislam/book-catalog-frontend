@@ -14,7 +14,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { user, isLoading } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
   const [navbar, setNavbar] = React.useState(false);
   const dispatch = useAppDispatch();
 
