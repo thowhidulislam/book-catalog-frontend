@@ -31,7 +31,7 @@ const BookCard = ({ booksData }: IBookCard) => {
   const handleWishlist = async () => {
     try {
       if (isInWishlist) {
-        await deleteWishlistBook({ id: booksData._id }).unwrap();
+        await deleteWishlistBook({ id: booksData?._id }).unwrap();
         notify("Book is removed from wishlist", "error");
       } else {
         // If the book is not in the wishlist, perform POST request
@@ -49,7 +49,7 @@ const BookCard = ({ booksData }: IBookCard) => {
   useEffect(() => {
     if (data?.data.length > 0) {
       const isBookInWishlist = data?.data?.find(
-        (book: IWishlistBook) => book?.book._id === booksData?._id
+        (book: IWishlistBook) => book?.book?._id === booksData?._id
       );
 
       isBookInWishlist && setIsInWishlist(isBookInWishlist?.book._id);

@@ -8,7 +8,6 @@
 
 #### Backend Live Link: https://bookshelf-server-nu.vercel.app
 
-
 ### Technology Stack:
 
 ---Frontend---
@@ -22,7 +21,8 @@
 
 - Express
 - Mongoose
-
+- Zod
+- bcrypt
 ### Features 
 
 - The landing page  have a header, a list of the top 10 recently added books and a footer. There are some open routes such as "All Books", "Sign In", and "Sign Up".
@@ -30,7 +30,6 @@
 - Users can create new accounts with a unique email and password.
 
 - Users can log in using their credentials. After a successful login, the login button would be replaced with a logout button in the navbar.
-
 
 ### All Books Page
 
@@ -46,7 +45,6 @@
 - Filtering options are provided to narrow down the book list based on genre & publication year.
 
 - Implemented an "Add New" Button to navigate to the "add-new-book" page to add a new book. Also added "Add New Book" as a navigation menu for authenticated users.
-
 
 ### Add New Book Page
 

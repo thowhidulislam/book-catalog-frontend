@@ -84,7 +84,7 @@ const BookDetails = () => {
   useEffect(() => {
     if (wishlistBooks?.data.length > 0) {
       const isBookInWishlist = wishlistBooks?.data.find(
-        (book: IWishlistBook) => book?.book._id === id
+        (book: IWishlistBook) => book?.book?._id === id
       );
       console.log("isBookInWishlist", isBookInWishlist);
       isBookInWishlist && setIsInWishlist(isBookInWishlist?.book._id);
