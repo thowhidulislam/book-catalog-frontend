@@ -13,7 +13,7 @@ const AddNewBook = () => {
   const [booksData, setBooksData] = useState<IBook>({
     title: "",
     author: "",
-    genre: "",
+    genre: genreNames[0],
     publicationDate: "",
     image: "",
   });
@@ -43,6 +43,8 @@ const AddNewBook = () => {
       notify(error?.data?.message, "error");
     }
   };
+
+  console.log("booksData", booksData);
 
   return (
     <section>

@@ -13,23 +13,18 @@ const PrivateRoute = ({ children }: IProps) => {
 
   useEffect(() => {
     const verifiedUser = localStorage.getItem("user");
-    console.log("Verified User from Local Storage:", verifiedUser);
 
     if (verifiedUser) {
       const parsedUser = JSON.parse(verifiedUser);
-      console.log("Parsed User from Local Storage:", parsedUser);
 
       dispatch(setUser(parsedUser));
     }
   }, [dispatch]);
 
   const { pathname } = useLocation();
-  console.log("User from Redux Store:", user);
-  console.log("Is Loading:", isLoading);
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log("user", user);
   if (user.email && !isLoading) {
     // User is authenticated, render the children (protected content)
     return children;
