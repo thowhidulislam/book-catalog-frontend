@@ -41,7 +41,7 @@ const Readinglist = () => {
   };
 
   return (
-    <section className="container mx-auto px-8 py-8">
+    <section className="container mx-auto px-8 py-8 min-h-screen">
       <h1 className="text-2xl font-bold text-gray-600">Reading List</h1>
       <div className="overflow-auto">
         <table className="my-3 border w-full text-center text-gray-600">

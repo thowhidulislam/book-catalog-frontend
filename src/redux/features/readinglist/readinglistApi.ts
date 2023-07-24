@@ -8,15 +8,18 @@ const readinglistApi = api.injectEndpoints({
         method: "POST",
         body: { bookId: id },
       }),
+      invalidatesTags: ["readinglist"],
     }),
     getReadingList: builder.query({
       query: () => `/readingList/getBooks`,
+      providesTags: ["readinglist"],
     }),
     updateReadingList: builder.mutation({
       query: ({ id }) => ({
         url: `/readingList/${id}`,
         method: "PATCH",
       }),
+      invalidatesTags: ["readinglist"],
     }),
   }),
 });

@@ -15,7 +15,7 @@ const Wishlist = () => {
 
   const tableHeaders = ["Book Name", "Author", "Genre", "Published Year"];
   return (
-    <section className="container mx-auto px-8 py-8 ">
+    <section className="container mx-auto px-8 py-8  min-h-screen">
       <h1 className="text-2xl font-bold text-gray-600">Wishlist</h1>
       <div className="overflow-auto">
         <table className="my-3 border w-full text-center text-gray-600">
