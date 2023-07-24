@@ -44,8 +44,6 @@ const AddNewBook = () => {
     }
   };
 
-  console.log("booksData", booksData);
-
   return (
     <section>
       <div className={`md:h-screen flex flex-col md:flex-row relative `}>
