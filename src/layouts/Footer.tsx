@@ -30,10 +30,12 @@ const Footer = () => {
           <RiInstagramLine />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center w-full mt-20 gap-5">
-        <p>Privacy Policy</p>
-        <p>Terms & Condition</p>
-        <p className="mx-auto md:ml-auto"> &#169; Bookshelf {year}</p>
+      <div className="flex flex-col md:flex-row justify-between items-center w-full mt-20 gap-5">
+        <div className="flex gap-3">
+          <p>Privacy Policy</p>
+          <p>Terms & Condition</p>
+        </div>
+        <p className=""> &#169; Bookshelf {year}</p>
       </div>
     </div>
   );
